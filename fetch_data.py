@@ -37,7 +37,9 @@ def make_table(data, RecordsKey):
 def tidy_data(df):
     """This module renames and keeps required data in the dataframe"""
     df = df.rename(columns=RENAME)
-    df["flag"] = data[2]["countryInfo"]["flag"] # assigns "flag" values from the object "countryInfo" to the "flag" column in the dataframe
+    df["flag"] = "" # creates the "flag" column in the dataframe and assigns empty strings to it
+    for i in range(len(data)): # iterates over the data
+        df.at[i, "flag"] = data[i]["countryInfo"]["flag"] # assigns "flag" values from the object "countryInfo" to the "flag" column in each row of the dataframe
     df = df[KEEP] # reassigns the dataframe with only the required columns and values
     df = df.dropna(subset=MUST_HAVE) # removes the rows of data which have null values in required fields
     return df # returns the cleaned dataframe
